@@ -1,0 +1,119 @@
+package com.example.diseasediagnosis;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class DiseaseModel {
+    private String imageUrl, title;
+    private int id;
+    private ArrayList<String> symptoms = new ArrayList<String>();
+    private ArrayList<String> precautions = new ArrayList<String>();
+    private ArrayList<String> doctors = new ArrayList<String>();
+
+    public String diagnose(List<SymptomsModel> symptoms, int diseaseId){
+        switch (diseaseId){
+            case 1: return new DiabetesDiagnosis().check(symptoms);
+            case 2: return new AsthmaDiagnosis().check(symptoms);
+            case 3: return new HypertensionDiagnosis().check(symptoms);
+            default: throw new IllegalArgumentException();
+        }
+    }//diagnose
+
+
+
+    public DiseaseModel(int id, String imageUrl, String title){
+        this.id=id;
+        this.imageUrl=imageUrl;
+        this.title=title;
+
+        switch (id){
+            case 1:
+
+                symptoms.add("Are you always thirty?");
+                symptoms.add("Are you always hungry?");
+                symptoms.add("Are you lacking your sleep?");
+                symptoms.add("Have you excessively gained or loss your weight?");
+                symptoms.add("Do your wounds heal slowly?");
+                symptoms.add("Do you have a blurred vision?");
+                //Max 10
+                symptoms.add("How many times you have to urine in a day? Enter a fixed number.");
+                //Max 125
+                symptoms.add("Enter your sugar level Fasting Reading.");
+                //Max 180
+                symptoms.add("Enter your sugar level Random Reading.");
+
+                precautions.add("Precautions to avoid Diabetes are:" + " \n Remain Hydrated."+ " \n Exercise regularly."+ " \n Control your stress."
+                        + " \n Monitor your sugar levels daily for a week.");
+                doctors.add("For further information following are the contact numbers of renowned doctors of Hyderabad."
+                        + "\n Dr. Javed Sukrani : Sukrani Diabetic Clinic(Doctors line Saddar)" + "\n Dr. Asif Ali Burney : (Latifabad Unit no. 06)");
+                break;
+
+            case 2:
+                symptoms.add("Do you feel shortness  of breath?");
+                symptoms.add("Do you feel chest pain?");
+                symptoms.add("Do you have trouble in sleeping?");
+                symptoms.add("Do you have cough?");
+                symptoms.add("Do you hear whistling sound from chest while sleeping?");
+                symptoms.add("Do you feel tired?");
+
+                precautions.add("Precautions:" + " \n Control your weight."+ " \n Don't smoke."+ " \n Don't go near to any smoker."
+                        + " \n Keep yourself warm." + "\n See doctor if conditions get worse.");
+                doctors.add("For further information following are the contact numbers of renowned doctors of Hyderabad."
+                + "\n Dr.Arsalan Shaikh (Quaid-i-Azam Complex, Doctors line Saddar)" + "\n Dr. Arshad (Doctors line Saddar)");
+                break;
+
+            case 3:
+                symptoms.add("Do you have severe headache?");
+                symptoms.add("Do you have vision problem?");
+                symptoms.add("Do you feel pain in chest?");
+                symptoms.add("Do  you feel difficulty in breathing?");
+                //Max 72
+                symptoms.add("Enter your pulse rate? Enter a fixed number.");
+                //Max 120
+                symptoms.add("Enter upper value of BP.");
+                //Max 80
+                symptoms.add("Enter lower value of BP.");
+
+                precautions.add("Precautions to stay safe from Hyper Tension:"+ " \n Eat low fat and salt."+ " \n Eat fruits and vegetables."+ " \n For men waist should be 40 inches and for women 35 inches."
+                        + " \n Exercise regularly." + "\n Stop smoking" + "\n Reduce stress." + "\n Monitor your bp readings.");
+                doctors.add("For further information following are the contact numbers of renowned doctors of Hyderabad."
+                        + "\n Dr. Feroze Memon (Doctors line Saddar)" + "\n Dr. Asif Ali Burney (Latifabad unit no.06)");
+                break;
+
+
+        }
+    }//constructor
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public int getId() {
+        return id;
+    }
+    public ArrayList<String> getSymptoms() {
+
+        return symptoms;
+    }
+
+    public ArrayList<String> getPrecautions() {
+        return precautions;
+    }
+
+    public ArrayList<String> getDoctors() {
+        return doctors;
+    }
+
+}//DiseaseModel
