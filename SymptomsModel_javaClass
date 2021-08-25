@@ -1,0 +1,74 @@
+package com.example.diseasediagnosis;
+
+import java.io.Serializable;
+
+public class SymptomsModel implements Serializable {
+
+    private String question, optionY, optionN, reading;
+    private boolean answer;
+
+    public SymptomsModel(String question, String reading, boolean answer) {
+        this.question = question;
+        this.reading = reading;
+        this.answer = answer;
+    }//constructor
+
+    public SymptomsModel() {
+
+    }//constructor
+
+    public SymptomsModel(String question, String optionY, String optionN, String reading) {
+        this.question = question;
+        this.optionY = optionY;
+        this.optionN = optionN;
+        this.reading = reading;
+    }//constructor
+
+    public String getQuestion() {
+
+        return question;
+    }
+
+    public void setQuestion(String question) {
+
+        this.question = question;
+    }
+
+    public String getOptionY() {
+
+        return optionY;
+    }
+
+    public void setOptionY(String optionY) {
+
+        this.optionY = optionY;
+    }
+
+    public String getOptionN() {
+
+        return optionN;
+    }
+
+    public void setOptionN(String optionN) {
+
+        this.optionN = optionN;
+    }
+
+    public String getReading() {
+        return reading;
+    }
+
+    public void setReading(String reading) {
+
+        this.reading = reading;
+    }
+
+    public boolean isAnswer() {
+        return answer;
+    }
+
+    public void setAnswer(boolean answer) {
+
+        this.answer = answer;
+    }
+}
