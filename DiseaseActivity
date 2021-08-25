@@ -1,0 +1,54 @@
+package com.example.diseasediagnosis;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import android.app.ActionBar;
+import android.os.Bundle;
+import android.view.MenuItem;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Disease extends AppCompatActivity {
+
+    private RecyclerView recyclerView;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_disease);
+
+        Toolbar toolbar= findViewById(R.id.toolbar);
+
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Diseases");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        recyclerView = findViewById(R.id.recycler_view);
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager.setOrientation(recyclerView.VERTICAL);
+        recyclerView.setLayoutManager(linearLayoutManager);
+
+        List<DiseaseModel> list = new ArrayList<>();
+        list.add(new DiseaseModel(1,"https://i.postimg.cc/y6byGCD2/Diabetes.jpg","Diabetes"));
+        list.add(new DiseaseModel(2,"https://i.postimg.cc/MKfm23RH/Inhaler.jpg","Asthma"));
+        list.add(new DiseaseModel(3,"https://i.postimg.cc/RZrQM1QR/Hyper-Tension.jpg","Hypertension"));
+
+        DiseaseAdapter diseaseAdapter = new DiseaseAdapter(list);
+        recyclerView.setAdapter(diseaseAdapter);
+
+    }
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item){
+        if(item.getItemId() == android.R.id.home){
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+}
