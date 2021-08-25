@@ -1,0 +1,29 @@
+package com.example.diseasediagnosis;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Repository {
+
+    private List<DiseaseModel> diseases = new ArrayList<DiseaseModel>();
+
+
+    public DiseaseModel getDiseaseById(int id){
+        for (DiseaseModel disease : getDiseases()) {
+            if (disease.getId()==id){
+                return disease;
+            }
+        }
+        return null;
+    }//getDiseaseId
+
+    public List<DiseaseModel> getDiseases(){
+        if (diseases.size()==0){
+            diseases.add(new DiseaseModel(1,"https://i.postimg.cc/y6byGCD2/Diabetes.jpg","Diabetes"));
+            diseases.add(new DiseaseModel(2,"https://i.postimg.cc/MKfm23RH/Inhaler.jpg","Asthma"));
+            diseases.add(new DiseaseModel(3,"https://i.postimg.cc/RZrQM1QR/Hyper-Tension.jpg","Hypertension"));
+        }
+        return diseases;
+    }//getDiseases
+
+}//RepositoryClass
