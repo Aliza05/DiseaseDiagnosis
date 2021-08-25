@@ -1,0 +1,121 @@
+package com.example.diseasediagnosis;
+
+import static com.example.diseasediagnosis.NumericParser.parseIntSafe;
+
+import java.util.List;
+
+public class HypertensionDiagnosis implements Diagnosis{
+    @Override
+    public String check(List<SymptomsModel> symptoms) {
+        String result;
+
+        //(outer loop) these symptoms having isAnswer = true x available symptoms ->
+        if (isHypertensive(symptoms)){
+            result = "You are suffering from Hypertension.";
+        }
+        else if(isMajorlyHypertensive(symptoms)){
+            result = "You are majorly risked towards Hypertension.";
+        }
+        else if(isSlightlyHypertensive(symptoms)){
+            result = "You are slightly risked towards Hypertension.";
+        }
+        else if (isNonHypertensive(symptoms)){
+            result = "You are safe from Hypertension.";
+        }
+        else {
+            result = "Failed !!";
+        }
+
+        return result;
+    }//check
+    public boolean isHypertensive(List<SymptomsModel> symptoms){
+        boolean headache =false;
+        boolean vision =false;
+        boolean chest =false;
+        boolean breathing =false;
+        boolean pulse =false;
+        boolean upper =false;
+        boolean lower = false;
+
+        for (SymptomsModel symptom:symptoms) {
+
+            headache = headache || symptom.getQuestion().equalsIgnoreCase("Do you have severe headache?");
+            vision= vision || symptom.getQuestion().equalsIgnoreCase("Do you have vision problem?");
+            chest= chest || symptom.getQuestion().equalsIgnoreCase("Do you feel pain in chest?");
+            breathing= breathing || symptom.getQuestion().equalsIgnoreCase("Do  you feel difficulty in breathing?");
+
+            pulse= pulse ||
+                    (parseIntSafe(symptom.getReading())>95 && symptom.getQuestion().equalsIgnoreCase("Enter your pulse rate? Enter a fixed number."));
+
+            upper= upper ||
+                    (parseIntSafe(symptom.getReading())>120 && symptom.getQuestion().equalsIgnoreCase("Enter upper value of BP."));
+
+            lower= lower ||
+                    (parseIntSafe(symptom.getReading())>80 && symptom.getQuestion().equalsIgnoreCase("Enter lower value of BP."));
+
+        }
+
+        return headache && vision && chest && breathing && vision && upper && (pulse || lower);
+    }//isHypertensive
+
+    public boolean isMajorlyHypertensive(List<SymptomsModel> symptoms){
+
+        boolean headache =false;
+        boolean vision =false;
+        boolean breathing =false;
+        boolean pulse =false;
+        boolean upper =false;
+        boolean lower = false;
+
+        for (SymptomsModel symptom:symptoms) {
+
+            headache = headache || symptom.getQuestion().equalsIgnoreCase("Do you have severe headache?");
+            vision= vision || symptom.getQuestion().equalsIgnoreCase("Do you have vision problem?");
+            breathing= breathing || symptom.getQuestion().equalsIgnoreCase("Do  you feel difficulty in breathing?");
+            pulse= pulse ||
+                    (parseIntSafe(symptom.getReading())>95 && symptom.getQuestion().equalsIgnoreCase("Enter your pulse rate? Enter a fixed number."));
+
+            upper= upper ||
+                    (parseIntSafe(symptom.getReading())>120 && symptom.getQuestion().equalsIgnoreCase("Enter upper value of BP."));
+
+            lower= lower ||
+                    (parseIntSafe(symptom.getReading())>80 && symptom.getQuestion().equalsIgnoreCase("Enter lower value of BP."));
+
+        }
+
+        return headache && vision && upper && (lower || pulse || breathing);
+    }//isMajorlyHypertensive
+
+    public boolean isSlightlyHypertensive(List<SymptomsModel> symptoms){
+
+        boolean headache =false;
+        boolean vision =false;
+        boolean breathing =false;
+        boolean pulse =false;
+        boolean upper =false;
+        boolean lower = false;
+
+        for (SymptomsModel symptom:symptoms) {
+
+            headache = headache || symptom.getQuestion().equalsIgnoreCase("Do you have severe headache?");
+            vision= vision || symptom.getQuestion().equalsIgnoreCase("Do you have vision problem?");
+            breathing= breathing || symptom.getQuestion().equalsIgnoreCase("Do  you feel difficulty in breathing?");
+            pulse= pulse ||
+                    (parseIntSafe(symptom.getReading())>95 && symptom.getQuestion().equalsIgnoreCase("Enter your pulse rate? Enter a fixed number."));
+
+            upper= upper ||
+                    (parseIntSafe(symptom.getReading())>120 && symptom.getQuestion().equalsIgnoreCase("Enter upper value of BP."));
+
+            lower= lower ||
+                    (parseIntSafe(symptom.getReading())>80 && symptom.getQuestion().equalsIgnoreCase("Enter lower value of BP."));
+
+        }
+
+        return (headache || vision) && (upper || lower) && pulse;
+    }//isSlightlyHypertensive
+
+    public boolean isNonHypertensive(List<SymptomsModel> symptoms){
+
+        return !isHypertensive(symptoms);
+    }//isNonHypertensive
+}
