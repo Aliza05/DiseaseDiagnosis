@@ -1,0 +1,8 @@
+ackage com.example.diseasediagnosis;
+
+import java.util.List;
+
+public interface Diagnosis {
+
+    public String check(List<SymptomsModel> symptoms);
+}
