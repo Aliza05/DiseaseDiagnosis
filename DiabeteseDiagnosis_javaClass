@@ -1,0 +1,121 @@
+package com.example.diseasediagnosis;
+
+import static com.example.diseasediagnosis.NumericParser.parseIntSafe;
+
+import java.util.List;
+
+public class DiabetesDiagnosis implements Diagnosis{
+    @Override
+    public String check(List<SymptomsModel> symptoms) {
+        String result;
+
+        //(outer loop) these symptoms having isAnswer = true x available symptoms ->
+        if (isDiabetic(symptoms)){
+            result = "You are suffering from Diabetes.";
+        }
+        else if(isMajorlyDiabetic(symptoms)){
+            result = "You are majorly risked towards Diabetes.";
+        }
+        else if(isSlightlyDiabetic(symptoms)){
+            result = "You are slightly risked towards Diabetes.";
+        }
+        else if (isNonDiabetic(symptoms)){
+            result = "You are safe from Diabetes.";
+        }
+        else {
+            result = "Failed !!";
+        }
+
+        return result;
+    }//check
+
+    public boolean isDiabetic(List<SymptomsModel> symptoms){
+        boolean thirsty =false;
+        boolean hungry =false;
+        boolean sleep =false;
+        boolean weight =false;
+        boolean wounds =false;
+        boolean vision =false;
+        boolean urination = false;
+        boolean fasting =false;
+        boolean random =false;
+
+        for (SymptomsModel symptom:symptoms) {
+
+            thirsty = thirsty || symptom.getQuestion().equalsIgnoreCase("Are you always thirty?");
+            hungry= hungry || symptom.getQuestion().equalsIgnoreCase("Are you always hungry?");
+            sleep= sleep || symptom.getQuestion().equalsIgnoreCase("Are you lacking your sleep?");
+            weight= weight || symptom.getQuestion().equalsIgnoreCase("Have you excessively gained or loss your weight?");
+            wounds= wounds || symptom.getQuestion().equalsIgnoreCase("Do your wounds heal slowly?");
+            vision= vision || symptom.getQuestion().equalsIgnoreCase("Do you have a blurred vision?");
+            urination= urination ||
+                    (parseIntSafe(symptom.getReading())>10 && symptom.getQuestion().equalsIgnoreCase("How many times you have to urine in a day? Enter a fixed number."));
+
+            fasting= fasting ||
+                    (parseIntSafe(symptom.getReading())>125 && symptom.getQuestion().equalsIgnoreCase("Enter your sugar level Fasting Reading."));
+
+            random= random ||
+                    (parseIntSafe(symptom.getReading())>180 && symptom.getQuestion().equalsIgnoreCase("Enter your sugar level Random Reading."));
+
+        }
+
+        return thirsty && hungry && sleep && weight && wounds && vision && random && (urination || fasting);
+    }//isDiabetic
+
+    public boolean isMajorlyDiabetic(List<SymptomsModel> symptoms){
+
+        boolean weight =false;
+        boolean wounds =false;
+        boolean urination = false;
+        boolean fasting =false;
+        boolean random =false;
+
+        for (SymptomsModel symptom:symptoms) {
+
+            weight= weight || symptom.getQuestion().equalsIgnoreCase("Have you excessively gained or loss your weight?");
+            wounds= wounds || symptom.getQuestion().equalsIgnoreCase("Do your wounds heal slowly?");
+            urination= urination ||
+                    (parseIntSafe(symptom.getReading())>10 && symptom.getQuestion().equalsIgnoreCase("How many times you have to urine in a day? Enter a fixed number."));
+
+            fasting= fasting ||
+                    (parseIntSafe(symptom.getReading())>125 && symptom.getQuestion().equalsIgnoreCase("Enter your sugar level Fasting Reading."));
+
+            random= random ||
+                    (parseIntSafe(symptom.getReading())>180 && symptom.getQuestion().equalsIgnoreCase("Enter your sugar level Random Reading."));
+
+        }
+
+        return weight && wounds && urination && (fasting || random);
+    }//isMajorlyDiabetic
+
+    public boolean isSlightlyDiabetic(List<SymptomsModel> symptoms){
+
+        boolean weight =false;
+        boolean wounds =false;
+        boolean urination = false;
+        boolean fasting =false;
+        boolean random =false;
+
+        for (SymptomsModel symptom:symptoms) {
+
+            weight= weight || symptom.getQuestion().equalsIgnoreCase("Have you excessively gained or loss your weight?");
+            wounds= wounds || symptom.getQuestion().equalsIgnoreCase("Do your wounds heal slowly?");
+            urination= urination ||
+                    (parseIntSafe(symptom.getReading())>10 && symptom.getQuestion().equalsIgnoreCase("How many times you have to urine in a day? Enter a fixed number."));
+
+            fasting= fasting ||
+                    (parseIntSafe(symptom.getReading())>125 && symptom.getQuestion().equalsIgnoreCase("Enter your sugar level Fasting Reading."));
+
+            random= random ||
+                    (parseIntSafe(symptom.getReading())>180 && symptom.getQuestion().equalsIgnoreCase("Enter your sugar level Random Reading."));
+
+        }
+
+        return (weight || wounds) && (urination || fasting || random);
+    }//isSlightlyDiabetic
+
+    public boolean isNonDiabetic(List<SymptomsModel> symptoms){
+
+        return !isDiabetic(symptoms);
+    }//isNonDiabetic
+}
