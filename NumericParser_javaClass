@@ -1,0 +1,12 @@
+package com.example.diseasediagnosis;
+
+public class NumericParser {
+    public static int parseIntSafe(String s){
+        try{
+            return Integer.parseInt(s);
+        }
+        catch (NumberFormatException ex){
+            return 0;
+        }
+    }//parseIntSafe
+}
