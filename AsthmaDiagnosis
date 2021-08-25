@@ -1,0 +1,93 @@
+package com.example.diseasediagnosis;
+
+import static com.example.diseasediagnosis.NumericParser.parseIntSafe;
+
+import java.util.List;
+
+public class AsthmaDiagnosis implements Diagnosis{
+    @Override
+    public String check(List<SymptomsModel> symptoms) {
+        String result;
+
+        //(outer loop) these symptoms having isAnswer = true x available symptoms ->
+        if (isAsthmatic(symptoms)){
+            result = "You are suffering from Asthma.";
+        }
+        else if(isMajorlyAsthmatic(symptoms)){
+            result = "You are majorly risked towards Asthma.";
+        }
+        else if(isSlightlyAsthmatic(symptoms)){
+            result = "You are slightly risked towards Asthma.";
+        }
+        else if (isNonAsthmatic(symptoms)){
+            result = "You are safe from Asthma.";
+        }
+        else {
+            result = "Failed !!";
+        }
+
+        return result;
+    }//check
+    public boolean isAsthmatic(List<SymptomsModel> symptoms){
+        boolean breath =false;
+        boolean chest =false;
+        boolean sleeping =false;
+        boolean cough =false;
+        boolean sound =false;
+        boolean tired =false;
+
+        for (SymptomsModel symptom:symptoms) {
+
+            breath = breath || symptom.getQuestion().equalsIgnoreCase("Do you feel shortness  of breath?");
+            chest = chest || symptom.getQuestion().equalsIgnoreCase("Do you feel chest pain?");
+            sleeping = sleeping || symptom.getQuestion().equalsIgnoreCase("Do you have trouble in sleeping?");
+            cough = cough || symptom.getQuestion().equalsIgnoreCase("Do you have cough?");
+            sound = sound || symptom.getQuestion().equalsIgnoreCase("Do you hear whistling sound from chest while sleeping?");
+            tired = tired || symptom.getQuestion().equalsIgnoreCase("Do you feel tired?");
+        }
+
+        return breath && chest && sleeping && cough && sound && tired;
+    }//isAsthmatic
+
+    public boolean isMajorlyAsthmatic(List<SymptomsModel> symptoms){
+
+        boolean breath =false;
+        boolean chest =false;
+        boolean sound =false;
+        boolean tired =false;
+
+
+        for (SymptomsModel symptom:symptoms) {
+
+            breath = breath || symptom.getQuestion().equalsIgnoreCase("Do you feel shortness  of breath?");
+            chest = chest || symptom.getQuestion().equalsIgnoreCase("Do you feel chest pain?");
+            sound = sound || symptom.getQuestion().equalsIgnoreCase("Do you hear whistling sound from chest while sleeping?");
+            tired = tired || symptom.getQuestion().equalsIgnoreCase("Do you feel tired?");
+        }
+
+        return breath && chest && (sound || tired);
+    }//isMajorlyAsthmatic
+
+    public boolean isSlightlyAsthmatic(List<SymptomsModel> symptoms){
+
+        boolean breath =false;
+        boolean chest =false;
+        boolean sound =false;
+        boolean tired =false;
+
+        for (SymptomsModel symptom:symptoms) {
+
+            breath = breath || symptom.getQuestion().equalsIgnoreCase("Do you feel shortness  of breath?");
+            chest = chest || symptom.getQuestion().equalsIgnoreCase("Do you feel chest pain?");
+            sound = sound || symptom.getQuestion().equalsIgnoreCase("Do you hear whistling sound from chest while sleeping?");
+            tired = tired || symptom.getQuestion().equalsIgnoreCase("Do you feel tired?");
+        }
+
+        return (breath || tired) && (chest || sound);
+    }//isSlightlyAsthmatic
+
+    public boolean isNonAsthmatic(List<SymptomsModel> symptoms){
+
+        return !isAsthmatic(symptoms);
+    }//isNonAsthmatic
+}//AsthmaDiagnosis
