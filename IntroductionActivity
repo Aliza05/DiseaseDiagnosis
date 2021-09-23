@@ -18,6 +18,10 @@ public class Introduction extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("About the App");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowCustomEnabled(true);
+        LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View view= inflater.inflate(R.layout.logo_image, null);
+        getSupportActionBar().setCustomView(view);
     }
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item){
